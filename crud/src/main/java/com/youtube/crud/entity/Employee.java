@@ -1,10 +1,20 @@
 package com.youtube.crud.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "employee")
-public class Employee {
+public class Employee implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -16,6 +26,16 @@ public class Employee {
     private String skills;
 
     public Employee() {
+    }
+
+    public Employee(Long id, String name, String contactNumber, String address, String gender, String department, String skills) {
+        this.id = id;
+        this.name = name;
+        this.contactNumber = contactNumber;
+        this.address = address;
+        this.gender = gender;
+        this.department = department;
+        this.skills = skills;
     }
 
     public Long getId() {
