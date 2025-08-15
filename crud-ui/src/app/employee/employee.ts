@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Employee } from '../employee.module';
 import { EmployeeService } from '../employee.service';
 import { HttpErrorResponse, HttpInterceptor, HttpInterceptorFn } from '@angular/common/http';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -25,7 +25,7 @@ import { Router, RouterLink } from '@angular/router';
     MatInputModule,
     MatRadioModule,
     MatDividerModule,
-    MatButtonModule, 
+    MatButtonModule,
     RouterLink
   ], //include Material modules
   templateUrl: './employee.html',
@@ -35,46 +35,70 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class EmployeeComponent implements OnInit {
 
-  employee: Employee = {
-    // id:0,
-    name: '',
-    contactNumber: '',
-    address: '',
-    gender: '',
-    department: '',
-    skills: ''
-  }
+  isCreateEmployee: boolean = true;
+
+  employee: any;
 
   skills: string[] = [];
 
   constructor(private employeeService: EmployeeService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
 
+    this.employee = this.activatedRoute.snapshot.data['employee']; // Get employee data from resolver
+
+    console.log(this.employee);
+
+    if (this.employee && this.employee.id > 0) {
+      this.employee.isCreateEmployee = false; // If employee exists, set to update mode
+      if (this.employee.skills != '') {
+        this.skills = []; // Split skills string into array
+        this.skills = this.employee.skills.split(',');
+      }
+    } else {
+      this.employee.isCreateEmployee = true; // If no employee data, set to create mode
+    }
+
   }
 
-  checkSkills(skill: string){
+  checkSkills(skill: string) {
     return this.employee.skills != null && this.employee.skills.includes(skill);
   }
 
-  saveEmployee(employeeForm: NgForm): void{
-    this.employeeService.saveEmployee(this.employee).subscribe(
-      {
-        next: (res: Employee) => {
-          console.log(res);
-          employeeForm.resetForm();
-          this.employee.gender = '';
-          this.skills = [];
-          this.employee.skills = '';
-          this.router.navigate(['/employee-list']); // Navigate to employee list after saving
-        },
-        error: (err: HttpErrorResponse) => {
-          console.log(err);
+  saveEmployee(employeeForm: NgForm): void {
+
+    if (this.isCreateEmployee) {
+      this.employeeService.saveEmployee(this.employee).subscribe(
+        {
+          next: (res: Employee) => {
+            console.log(res);
+            employeeForm.resetForm();
+            this.employee.gender = '';
+            this.skills = [];
+            this.employee.skills = '';
+            this.router.navigate(['/employee-list']); // Navigate to employee list after saving
+          },
+          error: (err: HttpErrorResponse) => {
+            console.log(err);
+          }
         }
-      }
-    );
+      );
+    } else {
+      this.employeeService.updateEmployee(this.employee).subscribe(
+        {
+          next: (res: Employee) => {
+            this.router.navigate(['/employee-list']); // Navigate to employee list after updating
+          },
+          error: (err: HttpErrorResponse) => {
+            console.log(err);
+          }
+        }
+      );
+    }
+
   }
 
   selectGender(gender: string): void {

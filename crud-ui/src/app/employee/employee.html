@@ -10,11 +10,11 @@
     <div class="card p-5 mt-3">
 
         <form #employeeForm="ngForm" (ngSubmit)="saveEmployee(employeeForm)">
-            <!-- <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline">
                 <mat-label>Employee Id</mat-label>
                 <input matInput placeholder="Employee Id" name="id" [(ngModel)]="employee.id" disabled>
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            </mat-form-field> -->
+            </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>Employee Name</mat-label>
@@ -46,8 +46,8 @@
             <div>
                 <label>Gender</label>
                 <mat-radio-group aria-label="Select an option">
-                    <mat-radio-button [checked]="employee.gender == 'M'" (click)="selectGender('M')" value="M">M</mat-radio-button>
-                    <mat-radio-button [checked]="employee.gender == 'F'" (click)="selectGender('F')" value="F">F</mat-radio-button>
+                    <mat-radio-button [checked]="employee.gender == 'Male'" (click)="selectGender('Male')" value="M">M</mat-radio-button>
+                    <mat-radio-button [checked]="employee.gender == 'Female'" (click)="selectGender('Female')" value="F">F</mat-radio-button>
                 </mat-radio-group>
             </div>
 
