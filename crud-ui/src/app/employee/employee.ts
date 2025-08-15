@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Employee } from '../employee.module';
 import { EmployeeService } from '../employee.service';
 import { HttpErrorResponse, HttpInterceptor, HttpInterceptorFn } from '@angular/common/http';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -24,8 +25,9 @@ import { HttpErrorResponse, HttpInterceptor, HttpInterceptorFn } from '@angular/
     MatInputModule,
     MatRadioModule,
     MatDividerModule,
-    MatButtonModule
-    ], //include Material modules
+    MatButtonModule, 
+    RouterLink
+  ], //include Material modules
   templateUrl: './employee.html',
   styleUrl: './employee.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -45,7 +47,9 @@ export class EmployeeComponent implements OnInit {
 
   skills: string[] = [];
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
 
@@ -62,6 +66,9 @@ export class EmployeeComponent implements OnInit {
           console.log(res);
           employeeForm.resetForm();
           this.employee.gender = '';
+          this.skills = [];
+          this.employee.skills = '';
+          this.router.navigate(['/employee-list']); // Navigate to employee list after saving
         },
         error: (err: HttpErrorResponse) => {
           console.log(err);

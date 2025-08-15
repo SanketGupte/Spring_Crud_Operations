@@ -1,12 +1,20 @@
 <div class="container">
-    <div class="card p-5 mt-5">
+
+    <div class="mt-3" [align]="'right'">
+        <button matFab extended color="accent" routerLink="/employee-list">
+        <!-- <mat-icon>table</mat-icon> -->
+        View Employee Records
+      </button>
+    </div>
+
+    <div class="card p-5 mt-3">
 
         <form #employeeForm="ngForm" (ngSubmit)="saveEmployee(employeeForm)">
-            <mat-form-field appearance="outline">
+            <!-- <mat-form-field appearance="outline">
                 <mat-label>Employee Id</mat-label>
                 <input matInput placeholder="Employee Id" name="id" [(ngModel)]="employee.id" disabled>
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            </mat-form-field>
+            </mat-form-field> -->
 
             <mat-form-field appearance="outline">
                 <mat-label>Employee Name</mat-label>

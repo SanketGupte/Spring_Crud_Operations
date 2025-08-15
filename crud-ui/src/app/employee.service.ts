@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from './employee.module';
-import { provideHttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,4 +16,8 @@ export class EmployeeService {
     return this.httpClient.post<Employee>(`${this.api}/save/employees`, employee);
   }
   
+  public getEmployeesList(): Observable<Employee[]> {
+    return this.httpClient.get<Employee[]>(`${this.api}/get/employees`);
+  }
+
 }
