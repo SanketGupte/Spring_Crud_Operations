@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="card p-5 mt-5">
+
+        <form #employeeForm="ngForm" (ngSubmit)="saveEmployee(employeeForm)">
+            <mat-form-field appearance="outline">
+                <mat-label>Employee Id</mat-label>
+                <input matInput placeholder="Employee Id" name="id" [(ngModel)]="employee.id" disabled>
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Employee Name</mat-label>
+                <input matInput placeholder="Employee Name" name="name" [(ngModel)]="employee.name">
+                <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Contact Number</mat-label>
+                <input matInput placeholder="Contact Number" name="contactNumber" [(ngModel)]="employee.contactNumber">
+                <mat-icon matSuffix>call</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Address</mat-label>
+                <input matInput placeholder="Address" name="address" [(ngModel)]="employee.address">
+                <mat-icon matSuffix>home</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Department</mat-label>
+                <mat-select name="department" [(ngModel)]="employee.department">
+                    <mat-option value="IT">IT</mat-option>
+                    <mat-option value="Network">Network</mat-option>
+                    <mat-option value="Finance">Finance</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div>
+                <label>Gender</label>
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button [checked]="employee.gender == 'M'" (click)="selectGender('M')" value="M">M</mat-radio-button>
+                    <mat-radio-button [checked]="employee.gender == 'F'" (click)="selectGender('F')" value="F">F</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <mat-form-field appearance="outline" class="mt-2">
+                <mat-label>Employee Skills</mat-label>
+                <input matInput placeholder="Employee Skills" name="skills" [(ngModel)]="employee.skills" disabled>
+                <mat-icon matSuffix>menu_book</mat-icon>
+            </mat-form-field>
+
+            <div>
+                <label>Skills</label>
+                <section class="example-section">
+                    <mat-checkbox (change)="onSkillChange($event)" value="Java" class="example-margin" [checked]="checkSkills('Java')">Java</mat-checkbox>
+                    <mat-checkbox (change)="onSkillChange($event)" value="Angular" class="example-margin" [checked]="checkSkills('Angular')">Angular</mat-checkbox>
+                    <mat-checkbox (change)="onSkillChange($event)" value="Spring Boot" class="example-margin" [checked]="checkSkills('Spring Boot')">Spring Boot</mat-checkbox>
+                    <mat-checkbox (change)="onSkillChange($event)" value="AWS" class="example-margin" [checked]="checkSkills('AWS')">AWS</mat-checkbox>
+                </section>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="text-center mt-3">
+                <button matButton="filled" class="m-2">Clear</button>
+                <button matButton="filled" color="primary" class="m-2">Save</button>
+            </div>
+        </form>
+
+    </div>
+</div>
